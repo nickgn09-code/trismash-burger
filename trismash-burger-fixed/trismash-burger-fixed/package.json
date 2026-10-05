@@ -1,0 +1,15 @@
+{
+  "name": "trismash-burger",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "serve ."
+  },
+  "dependencies": {
+    "three": "^0.180.0"
+  },
+  "devDependencies": {
+    "serve": "^14.2.6"
+  }
+}

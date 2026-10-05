@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="Trismash Burger - Smash burgers que rompen las reglas.">
+<title>Trismash Burger</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="src/styles.css">
+<link rel="icon" type="image/png" href="public/images/favicon.png">
+<script>
+/* Three.js: usa la copia local (node_modules) si existe; si no, la CDN. Evita la pantalla en blanco. */
+(function(){
+  var local=new URL('node_modules/three/build/three.module.js',document.baseURI).href, url='https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js';
+  try{var x=new XMLHttpRequest();x.open('HEAD',local,false);x.send();if(x.status===200)url=local;}catch(e){}
+  var s=document.createElement('script');s.type='importmap';s.textContent=JSON.stringify({imports:{three:url}});document.head.appendChild(s);
+})();
+</script>
+</head>
+<body>
+<canvas id="webgl"></canvas>
+
+<header class="site-header">
+  <a href="#home" class="brand"><span class="brand-mark"><img src="public/images/logo.png" alt="Trismash"></span><span class="brand-name">TRISMASH</span></a>
+  <nav class="main-nav"><a href="#home">INICIO</a><a href="#story">HISTORIA</a><a href="#menu">MENÚ</a></nav>
+  <button class="cart-button" id="cartButton" type="button"><span>PEDIDO</span><span class="cart-count" id="cartCount">0</span></button>
+</header>
+
+<main>
+  <!-- HERO: la hamburguesa corta el título letra por letra (lo construye app.js) -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <div class="hero-noise"></div>
+      <span class="eyebrow">SMASH BURGER / COCHABAMBA</span>
+      <h1 class="hero-title" id="heroTitle">TRISMASH BURGER</h1>
+      <p class="hero-subtitle">DOBLE CARNE. DOBLE ACTITUD.<br>UNA SMASH QUE NO PIDE PERMISO.</p>
+      <a href="#menu" class="hero-button"><span>VER EL MENÚ</span><span>→</span></a>
+      <div class="hero-bottom"><span>SCROLL PARA CORTAR</span><span class="hero-scroll-line"></span><span>01 / 03</span></div>
+    </div>
+  </section>
+
+  <section class="story" id="story">
+    <div class="story-glow"></div>
+    <div class="story-content">
+      <span class="catalog-label">01 / 03 · OUR STORY</span>
+      <h2>NO HACEMOS <strong>BURGERS NORMALES.</strong></h2>
+      <p>En Trismash llevamos la smash burger a otro nivel. Carne prensada al fuego, queso fundido, ingredientes con personalidad y combinaciones creadas para romper la rutina.</p>
+      <p>Cada burger tiene su propia identidad. Cinco recetas. Cinco formas diferentes de entender una smash.</p>
+      <a href="#menu" class="hero-button"><span>DESCUBRIR BURGERS</span><span>→</span></a>
+    </div>
+  </section>
+
+  <section class="catalog" id="menu">
+    <div class="catalog-top">
+      <div><span class="catalog-label">02 / 03 · THE MENU</span><h2>CONOCE <strong>NUESTRAS BURGERS.</strong></h2></div>
+      <p>Cinco formas diferentes de entender una smash burger.</p>
+    </div>
+
+    <div class="catalog-stage">
+      <div class="catalog-number"><span id="currentNumber">03</span><i></i><span>05</span></div>
+      <button class="slider-arrow prev" id="prevProduct" type="button" aria-label="Producto anterior">←</button>
+
+      <div class="catalog-burger" id="catalogBox">
+        <div class="catalog-burger-glow"></div>
+        <div class="catalog-burger-ring"></div>
+        <div class="catalog-shadow"></div>
+        <div class="burger-tilt" id="burgerTilt"><img id="catalogBurger" src="public/images/burgers/la-tri.png" alt="La Tri" draggable="false"></div>
+        <div class="catalog-flash" id="catalogFlash">
+          <div class="flash-core"></div><div class="flash-ring"></div><div class="flash-ring r2"></div><div class="flash-ring r3"></div>
+          <i style="--a:0deg"></i><i style="--a:45deg"></i><i style="--a:90deg"></i><i style="--a:135deg"></i>
+          <i style="--a:180deg"></i><i style="--a:225deg"></i><i style="--a:270deg"></i><i style="--a:315deg"></i>
+        </div>
+      </div>
+
+      <button class="slider-arrow next" id="nextProduct" type="button" aria-label="Producto siguiente">→</button>
+
+      <article class="catalog-info" id="catalogInfo">
+        <span class="catalog-product-number" id="catalogNumber">III</span>
+        <h3 id="catalogName">La Tri</h3>
+        <div class="catalog-line"></div>
+        <p id="catalogDescription">Doble carne smash, queso cheddar, charque crocante, queso frito, salsa blue cheese y papas.</p>
+        <div class="catalog-options">
+          <button class="size-option active" data-size="doble" type="button">DOBLE</button>
+          <button class="size-option" data-size="triple" type="button">TRIPLE</button>
+        </div>
+        <div class="catalog-buy">
+          <div class="catalog-price"><strong id="catalogPrice">45</strong><span>Bs</span></div>
+          <button class="order-button" id="orderProduct" type="button">PEDIR ESTA <span>→</span></button>
+        </div>
+      </article>
+    </div>
+
+    <div class="catalog-dots" id="catalogDots"></div>
+    <div class="catalog-thumbnails" id="catalogThumbs"></div>
+  </section>
+
+  <section class="final">
+    <div class="final-inner">
+      <span class="catalog-label">03 / 03 · READY?</span>
+      <h2>TU PRÓXIMA <strong>BURGER</strong> TE ESTÁ ESPERANDO.</h2>
+      <a href="#menu" class="hero-button"><span>ELEGIR MI BURGER</span><span>→</span></a>
+    </div>
+  </section>
+</main>
+
+<div class="cart-overlay" id="cartOverlay"></div>
+<aside class="cart-drawer" id="cartDrawer" aria-label="Carrito">
+  <div class="cart-header">
+    <div><span class="catalog-label">YOUR ORDER</span><h3>TU PEDIDO</h3></div>
+    <button id="closeCart" type="button" aria-label="Cerrar carrito">×</button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-footer">
+    <div class="cart-row"><span>SUBTOTAL</span><span id="cartSubtotal">0 Bs</span></div>
+    <div class="cart-total"><span>TOTAL</span><strong id="cartTotal">0 Bs</strong></div>
+    <button class="checkout-button" id="checkoutButton" type="button">PEDIR POR WHATSAPP <span>→</span></button>
+  </div>
+</aside>
+
+<div class="toast" id="toast"><span>✓</span><span id="toastText">Agregado al pedido</span></div>
+<script type="module" src="src/app.js"></script>
+</body>
+</html>
